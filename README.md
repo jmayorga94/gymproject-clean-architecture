@@ -48,15 +48,6 @@ Key principles:
 - Dependencies point inward: outer layers (API, Infrastructure) depend on inner layers (Application, Domain).
 - Keep business rules (Domain) framework-agnostic and easy to unit test.
 
-## Patterns applied
-
-- **Clean Architecture** — clear separation into Presentation, Application, Domain and Infrastructure layers; dependencies point inward toward the Domain.
-- **Dependency Injection** — composition root lives in the API/Host; services are registered with appropriate lifetimes (`Scoped` for request-scoped services, `Singleton` for global, thread-safe services).
-- **Options / Configuration Binding** — configuration is bound to typed POCOs and provided to services via `IOptions<T>` or registered instances to avoid leaking `IConfiguration` into core layers.
-- **Repository / Adapter Pattern** — persistence is encapsulated behind repository or adapter interfaces implemented in Infrastructure; Application layer depends on interfaces only.
-- **DTOs for API Boundary** — Request/Response DTOs live with the Presentation/Contracts layer; mapping to domain models happens at the boundary.
-- **Unit-testable Use-cases** — use-cases in Application are small, orchestrated classes/functions that are easy to unit test (no I/O in the domain or application logic).
-
 ## Solution layout
 
 ```
@@ -67,18 +58,3 @@ src/
   GymManagement.Domain/        # Domain entities and business rules
   GymManagement.Infrastructure/# Persistence and external implementations
 ```
-## Patterns Applied
-
-## CQRS 
-    Command Query Responsability segragation 
-
-## What is it?
-   Splits reads and writes 
-   Splits inot commands and reads
-   Example Create Subscription, Delete Subscription
-   Queries
-   Get Subscription
-   Get Room
-   In other words not mixing objects that change state with objects that read
-## Why?
-   So we can split 

@@ -29,6 +29,7 @@ This repository follows a Clean Architecture approach. High-level responsibiliti
 - Application (`GymManagement.Application`):
   - Contains use-cases / application services that orchestrate business logic.
   - Depends on abstractions (interfaces) only; coordinates domain entities to fulfill requests.
+  - Fetch domain objects
 
  - Contracts (`GymManagement.Contracts`):
   - Public API contracts (request/response DTOs, enums and small shared types) that define the stable surface between the service and its clients.
@@ -57,3 +58,5 @@ src/
   GymManagement.Domain/        # Domain entities and business rules
   GymManagement.Infrastructure/# Persistence and external implementations
 ```
+## Architecture diagram
+

@@ -1,0 +1,18 @@
+@host= http://localhost:5255/api/subscriptions
+@adminId= 3fa85f64-5717-4562-b3fc-2c963f66afa6
+
+POST {{host}}
+Content-Type: application/json
+
+{
+  "SubscriptionType": "Free",
+  "AdminId": "{{adminId}}"
+}
+
+### Response 201 Created
+Content-Type: application/json  
+
+{
+  "Id": "{guid}",
+  "subscriptionType": "Free",
+}

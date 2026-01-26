@@ -1,4 +1,3 @@
-using GymManagement.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GymManagement.Application
@@ -13,8 +12,7 @@ namespace GymManagement.Application
         {
             if (services is null) throw new ArgumentNullException(nameof(services));
 
-            services.AddScoped<ISubscriptionService, SubscriptionService>();
-
+            services.AddMediatR(options=> options.RegisterServicesFromAssemblyContaining(typeof(DependencyInjection)));
             return services;
         }
     }

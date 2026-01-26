@@ -32,4 +32,11 @@ This file lists the main architectural patterns used in the project. Each entry 
 - When to use: always at the boundary to decouple external contracts from internal models.
 - How it fits this repo: DTOs and Contracts define the API surface and mapping occurs in the Presentation layer.
 
+## Mediator Pattern
+- What it is: objects communicate with an orchestrator
+- When to use: reduce coupling between objects
+- How it fits this repo: You can find the mediator pattern implemented with the Mediator library in the application layer.
+
+
+
 ---

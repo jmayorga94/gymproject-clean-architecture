@@ -1,16 +1,34 @@
 using ErrorOr;
 using GymManagement.Application.Subscriptions.Commands.CreateSubscription;
+using GymManagement.Application.Subscriptions.Common.Interfaces;
+using GymManagement.Domain.Subscriptions;
 using MediatR;
 
 namespace GymManagement.Application.Subscriptions.Commands.CreateSubscription
 {
-    public class CreateSubscriptionCommandHandler: IRequestHandler<CreateSubscriptionCommand, ErrorOr<Guid>>
+    public class CreateSubscriptionCommandHandler : IRequestHandler<CreateSubscriptionCommand, ErrorOr<Subscription>>
     {
-        public async Task<ErrorOr<Guid>> Handle(CreateSubscriptionCommand request, CancellationToken cancellationToken)
+        private readonly ISubscriptionRepository _subscriptionRepository;
+        private readonly IUnitOfWork _unitOfWork;
+        
+        public CreateSubscriptionCommandHandler(ISubscriptionRepository subscriptionRepository, IUnitOfWork unitOfWork)
         {
-            //return Error.Failure("Subscription.CreateFailed", "Failed to create subscription.");
+            _subscriptionRepository = subscriptionRepository;
+            _unitOfWork = unitOfWork;
+        }
+        public async Task<ErrorOr<Subscription>> Handle(CreateSubscriptionCommand request, CancellationToken cancellationToken)
+        {
+            // Create Subscription Logic Here
+            var subscription = new Subscription
+            {
+                Id = Guid.NewGuid()
+            };
 
-            return Guid.NewGuid();
+            await _subscriptionRepository.AddSubscriptionAsync(subscription);
+
+            await _unitOfWork.CommitChangesAsync();
+
+            return subscription;
         }
     }
 }

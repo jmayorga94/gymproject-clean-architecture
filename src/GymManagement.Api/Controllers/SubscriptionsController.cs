@@ -25,8 +25,8 @@ namespace GymManagement.Api.Controllers
             var createSubscriptionResult = await _mediator.Send(command);
 
             return createSubscriptionResult.MatchFirst(
-                guid => Ok(new CreateSubscriptionResponse(
-                    guid,
+                subscription => Ok(new CreateSubscriptionResponse(
+                    subscription.Id,
                     request.SubscriptionType)),
                 error => Problem(detail: error.Description, title: error.Code)
             );

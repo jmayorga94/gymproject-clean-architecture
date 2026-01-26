@@ -42,4 +42,21 @@ This file lists the main architectural patterns used in the project. Each entry 
 - When to use: when you want to make error handling explicit, avoid exceptions for flow control, and simplify error propagation across layers.
 - How it fits this repo: the Application layer uses the Result pattern to return operation outcomes from handlers, enabling controllers to handle success and error cases in a uniform way.
 
----
+## Repository Pattern
+
+- What is it: A pattern for decoupling domain and application logic from persistence layer (database) details. Provides a collection-like interface for accessing domain objects, hiding storage complexity.
+- When to use: Use this pattern to achieve high decoupling between your application and persistence layer, enable testability, and simplify switching persistence implementations.
+- How it fits this repo: 
+  - **Generic Repository Interface** (`IRepository<T>`) in Application layer defines standard CRUD operations: GetByIdAsync, GetAllAsync, AddAsync, Update, Delete, ExistsAsync
+  - **Specific Repositories** (e.g., `ISubscriptionRepository`) extend the generic interface and add domain-specific queries
+  - **Repository Implementations** in Infrastructure layer (e.g., `SubscriptionRepository`) inherit from a base `Repository<T>` class and provide concrete database operations using Entity Framework Core
+  - Repositories work with the Unit of Work pattern for consistent transaction handling
+
+## Unit of Work 
+- What is it: A pattern that coordinates multiple repositories and manages transactions to ensure data consistency. Acts as a transaction coordinator between the application and persistence layers.
+- When to use: Use it to achieve high-level consistency when dealing with multiple repositories and transactions, ensuring all-or-nothing semantics.
+- How it fits this repo: 
+  - **IUnitOfWork Interface** in Application layer defines repository access (`Subscriptions`, `Orders`, etc.) and transaction methods (CommitChangesAsync, RollbackChangesAsync, BeginTransactionAsync, CommitTransactionAsync, RollbackTransactionAsync)
+  - **UnitOfWork Implementation** in Infrastructure layer manages the DbContext, coordinates all repositories, and handles transactional operations
+  - Handlers and use-cases inject IUnitOfWork (not individual repositories) and access repositories through it
+  - All changes are persisted via a single CommitChangesAsync call, ensuring atomic operations

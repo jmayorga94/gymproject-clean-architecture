@@ -37,6 +37,9 @@ This file lists the main architectural patterns used in the project. Each entry 
 - When to use: reduce coupling between objects
 - How it fits this repo: You can find the mediator pattern implemented with the Mediator library in the application layer.
 
-
+## Result Pattern
+- What it is: a pattern for representing the outcome of operations as either a success (with a value) or a failure (with error details), instead of using exceptions or nulls.
+- When to use: when you want to make error handling explicit, avoid exceptions for flow control, and simplify error propagation across layers.
+- How it fits this repo: the Application layer uses the Result pattern to return operation outcomes from handlers, enabling controllers to handle success and error cases in a uniform way.
 
 ---
